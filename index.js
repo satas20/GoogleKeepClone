@@ -1,73 +1,227 @@
-const notead=  $("#notepad");
-const addButton=$("#addButton");
-const colorSelect=$("#colorSelect");
-const notes=$("#notes");
-function updateStorage(){
-  localStorage.setItem("notes", JSON.stringify(notes.html()));
 
-}
-function showNotes(){
-  const storedNotes = localStorage.getItem("notes");
-  if (storedNotes) {
-    notes.html(JSON.parse(storedNotes));
-  }
 
-}
+// Input Bar
+const inputBar = document.getElementById("inputBar");
 
-$(document).ready(function () {
-  showNotes();
-  // You need to call updateStorage after the page loads
-  updateStorage();
+
+// Input Note
+const inputNote = document.createElement("div")
+inputNote.classList.add("inputNote");
+
+// Input Title
+let inputTitle = document.createElement("h3");
+inputTitle.id = "inputTitle";
+inputTitle.contentEditable = true;
+inputTitle.ariaPlaceholder = "Title";
+
+// Input Body
+let inputBody = document.createElement("p");
+inputBody.id = "inputBody";
+inputBody.contentEditable = true;
+inputBody.ariaPlaceholder = "Take a Note...";
+
+// Close Button
+let inputCloseBtn = document.createElement("button");
+inputCloseBtn.classList.add("closeBtn");
+inputCloseBtn.textContent = "Close";
+
+// Appending Items in Input Note
+inputNote.appendChild(inputTitle);
+inputNote.appendChild(inputBody);
+inputNote.appendChild(inputCloseBtn);
+
+
+// Start Writing Note just after opening
+document.body.addEventListener("keydown", (event) => {
+    if (event.target.classList.contains("body") && !event.target.classList.contains("blur")) {
+        inputBar.replaceWith(inputNote);
+        inputBody.focus();
+    }
+})
+
+// Open Input Note
+inputBar.addEventListener("click", () => {
+    if (!document.body.classList.contains("blur")) {
+        inputBar.replaceWith(inputNote);
+        inputTitle.focus();
+    }
 });
-addButton.on("click", function() {
-    // Your code to execute when the button is clicked
-    console.log("Textarea Value:", notead.val());
-    var noteValue = notead.val();
-    var colorValue = colorSelect.val();
 
-      if (noteValue.trim() !== "") {
-        // Create a new card element using jQuery
-        const newNoteCard = $(
-          `<div class="col mb-4">
-           
-          </div>`
-        );
-        const card=$(
-            ` <div class="card" style="background-color: ${colorValue};">
-              
-            </div>`
-          );
-        const cardBody = $(
-            `<div class="card-body">
-            ${noteValue}
-          </div>`
-          );
-        // Append the new card to the "notes" container
-        const button = $(
-          `<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24" class="">
-          <path d="M 10 2 L 9 3 L 3 3 L 3 5 L 4.109375 5 L 5.8925781 20.255859 L 5.8925781 20.263672 C 6.023602 21.250335 6.8803207 22 7.875 22 L 16.123047 22 C 17.117726 22 17.974445 21.250322 18.105469 20.263672 L 18.107422 20.255859 L 19.890625 5 L 21 5 L 21 3 L 15 3 L 14 2 L 10 2 z M 6.125 5 L 17.875 5 L 16.123047 20 L 7.875 20 L 6.125 5 z"></path>
-          </svg>`
-        );
-                      
+// Input Title to input Body
+inputTitle.addEventListener("keydown", (event) => {
+    if (event.key == "Enter") {
+        event.preventDefault();
+        inputBody.focus();
+    }
+})
 
-        card.append(cardBody);
-        card.append(button);
-        newNoteCard.append(card);
-        notes.prepend(newNoteCard);
-        
+// Notes Wrapper
+const notesWrapper = document.getElementById("notesWrapper");
 
-        // Clear the textarea after adding the note
-        notead.val("");
+
+// Create Note Popup
+let poped=false;
+const createNotePopup = (note) => {
+    if(poped){
+      return;
+    }
+    // Defining parameter note things
+    let noteTitle = note.children[0];
+    let noteBody = note.children[1];
+
+    // Note Popup
+    const notePopup = document.createElement("div");
+    notePopup.classList.add("notePopup");
+
+    // Note Popup Title
+    let notePopupTitle = document.createElement("h3");
+    notePopupTitle.textContent = noteTitle.textContent;
+    notePopupTitle.contentEditable = true;
+
+    // Note Popup Body
+    let notePopupBody = document.createElement("p");
+    notePopupBody.innerHTML = noteBody.innerHTML;
+    notePopupBody.contentEditable = true;
+
+    // Close Btn
+    let closeBtn = document.createElement("button");
+    closeBtn.classList.add("closeBtn");
+    closeBtn.textContent = "Close";
+    closeBtn.addEventListener("click", () => {
+        noteTitle.textContent = notePopupTitle.textContent;
+        noteBody.innerHTML = notePopupBody.innerHTML;
+        notePopup.remove();
+        document.body.classList.remove("blur");
+        inputBar.removeAttribute("disabled");
+        poped=false;
+    });
+
+    // Appending Items in Note Popup
+    notePopup.appendChild(notePopupTitle);
+    notePopup.appendChild(notePopupBody);
+    notePopup.appendChild(closeBtn);
+
+    // Making background blur
+    document.body.classList.add("blur");
+    inputBar.disabled = "true";
+    notePopupTitle.addEventListener("keydown", (event) => {
+        if (event.key == "Enter") {
+            event.preventDefault();
+            notePopupBody.focus();
+        }
+    })
+
+
+    // Appending Note Popup in body
+    document.body.insertAdjacentElement('afterend', notePopup);
+    poped=true;
+
+}
+
+// Create New Note Function
+const createNote = () => {
+
+    // Note
+    const note = document.createElement("div");
+    note.classList.add("note");
+
+    // Note Title
+    let noteTitle = document.createElement("h3");
+    noteTitle.textContent = inputTitle.textContent;
+
+    // Note Body
+    let noteBody = document.createElement("p");
+    noteBody.innerHTML = inputBody.innerHTML;
+
+    // Note Delete Btn
+    let deleteBtn = document.createElement("div");
+    deleteBtn.classList.add("deleteBtn");
+    deleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
+    deleteBtn.addEventListener("click", ()=>{
+        console.log("clicked")
+        let deletedNote = deleteBtn.parentElement;
+        deletedNote.remove();
         updateStorage();
-      }
-  });
-notes.on("click",function(e)
-{
-  if(e.target.tagName== "svg")
-  {
-    console.log(e.target.tagName);
-    e.target.parentElement.parentElement.remove();
+    });
+
+    // Appending Items in Note
+    note.appendChild(noteTitle);
+    note.appendChild(noteBody);
+    note.appendChild(deleteBtn);
+
+    // Event Listeners
+    note.addEventListener("click", (event) => {
+        console.log(event.target);
+        if(!event.target.classList.contains("fa-trash")){
+            createNotePopup(note);
+        }
+    });
+
+    // Appending Note in Notes Wrapper
+    notesWrapper.appendChild(note);
+}
+
+
+// Input Close Button Functionality
+inputCloseBtn.addEventListener("click", () => {
+    if (inputTitle.textContent == "" && inputBody.textContent == "") {
+        inputNote.replaceWith(inputBar);
+        return;
+    }
+    createNote();
+    inputTitle.textContent = "";
+    inputBody.textContent = "";
+    inputNote.replaceWith(inputBar);
     updateStorage();
+})
+function updateStorage() {
+  var notesWrapper = document.getElementById("notesWrapper"); // Assuming "notesWrapper" is an element with this ID
+  if (notesWrapper) {
+    localStorage.setItem("notesWrapper", JSON.stringify(notesWrapper.innerHTML));
   }
+}
+
+function showNotes() {
+  var notesWrapper = document.getElementById("notesWrapper"); // Assuming "notesWrapper" is an element with this ID
+  if (notesWrapper) {
+    var storedNotes = localStorage.getItem("notesWrapper");
+    if (storedNotes) {
+      notesWrapper.innerHTML = JSON.parse(storedNotes);
+    }
+  }
+
+
   
+}
+function setupEventListeners(){
+  // Set up event listeners for each delete button
+  const deleteButtons = document.querySelectorAll(".deleteBtn");
+
+  deleteButtons.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", () => {
+      console.log("clicked");
+      let deletedNote = deleteBtn.parentElement;
+      deletedNote.remove();
+      updateStorage();
+    });
+  });
+
+
+  // Set up event listeners for each note
+  const notes = document.querySelectorAll(".note");
+
+  notes.forEach((note) => {
+    note.addEventListener("click", (event) => {
+      console.log(event.target);
+      if (!event.target.classList.contains("fa-trash")) {
+        createNotePopup(note);
+      }
+    });
+  });
+
+}
+document.addEventListener("DOMContentLoaded", function () {
+  showNotes();
+  setupEventListeners();
+  updateStorage();
 });
