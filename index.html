@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Google Keep</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    
+</head>
+<body>
+    <!-- Header -->
+    <section id="Header" >
+       
+        <header class="p-3 mb-3 border-bottom">
+            <div class="container">
+              <div class="d-flex  align-items-center ">
+                <a  class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 48 48">
+                        <path fill="#ffc107" d="M9,42h23l10-10V9c0-1.7-1.3-3-3-3H9C7.3,6,6,7.3,6,9v30C6,40.7,7.3,42,9,42z"></path><path fill="#ffecb3" d="M32,42V32h10L32,42z"></path><path fill="#fff" d="M28,36h-8v-7.9c-3.1-1.5-5-4.6-5-8.1c0-5,4-9,9-9c5,0,9,4,9,9c0,3.5-1.9,6.5-5,8.1V36z M22,34h4 v-7.3l0.6-0.3c2.7-1.1,4.4-3.6,4.4-6.5c0-3.9-3.1-7-7-7c-3.9,0-7,3.1-7,7c0,2.9,1.7,5.4,4.4,6.5l0.6,0.3V34z"></path><path fill="#fff" d="M22 35h4v3h-4V35zM21 30H27V32H21z"></path>
+                        </svg>
+                </a>
+        
+                <ul class="nav col-1">
+                  <li><a  class="nav-link px-3 link-secondary font-weight-bold">Keep</a></li>
+                </ul>
+        
+                <form class="md-invisible col-lg-5 mb-3 mb-lg-0 " role="search">
+                  <input type="search" class="form-control" placeholder="Search" aria-label="Search">
+                </form>
+        
+              
+              </div>
+            </div>
+
+          </header>
+    </section>
+    <!-- Take Notes -->
+    <section class="container mt-5">
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="col-5">
+            <div>
+                <textarea class="form-control " placeholder="Take Notes.." id="notepad" rows="2"></textarea>
+            </div>
+            
+        </div>
+        <div class="col-1 ">
+            <div class="container ">
+                <div class="row">
+                  <div class="col">
+                    <input type="color" class="form-control-sm mb-2" id="colorSelect" value="#ffffff" title="Choose your color">
+                  </div>
+                  <div class="col">
+                    <button type="button"id="addButton" class="btn btn-warning btn-sm">Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        
+      </section>
+    <!-- Notes -->
+    <section >
+        <div  class="container mt-4">
+            <div id=notes class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+              <div class="col mb-4">
+                <div class="card bord" >
+                  <div class="card-body ">
+                     <div col-auto> Note 1 </div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24" class="">
+                    <path d="M 10 2 L 9 3 L 3 3 L 3 5 L 4.109375 5 L 5.8925781 20.255859 L 5.8925781 20.263672 C 6.023602 21.250335 6.8803207 22 7.875 22 L 16.123047 22 C 17.117726 22 17.974445 21.250322 18.105469 20.263672 L 18.107422 20.255859 L 19.890625 5 L 21 5 L 21 3 L 15 3 L 14 2 L 10 2 z M 6.125 5 L 17.875 5 L 16.123047 20 L 7.875 20 L 6.125 5 z"></path>
+                    </svg>
+                </div>
+              </div>
+              <div class="col mb-4">
+                <div class="card bord" >
+                  <div class="card-body ">
+                     <div col-auto> Note 2 </div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24" class="">
+                    <path d="M 10 2 L 9 3 L 3 3 L 3 5 L 4.109375 5 L 5.8925781 20.255859 L 5.8925781 20.263672 C 6.023602 21.250335 6.8803207 22 7.875 22 L 16.123047 22 C 17.117726 22 17.974445 21.250322 18.105469 20.263672 L 18.107422 20.255859 L 19.890625 5 L 21 5 L 21 3 L 15 3 L 14 2 L 10 2 z M 6.125 5 L 17.875 5 L 16.123047 20 L 7.875 20 L 6.125 5 z"></path>
+                    </svg>
+                </div>
+              </div>
+              <div class="col mb-4">
+                <div class="card bord" >
+                  <div class="card-body ">
+                     <div col-auto> Note 3 </div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24" class="">
+                    <path d="M 10 2 L 9 3 L 3 3 L 3 5 L 4.109375 5 L 5.8925781 20.255859 L 5.8925781 20.263672 C 6.023602 21.250335 6.8803207 22 7.875 22 L 16.123047 22 C 17.117726 22 17.974445 21.250322 18.105469 20.263672 L 18.107422 20.255859 L 19.890625 5 L 21 5 L 21 3 L 15 3 L 14 2 L 10 2 z M 6.125 5 L 17.875 5 L 16.123047 20 L 7.875 20 L 6.125 5 z"></path>
+                    </svg>
+                </div>
+              </div>
+              <div class="col mb-4">
+                <div class="card bord" >
+                  <div class="card-body ">
+                     <div col-auto> Note 4 </div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24" class="">
+                    <path d="M 10 2 L 9 3 L 3 3 L 3 5 L 4.109375 5 L 5.8925781 20.255859 L 5.8925781 20.263672 C 6.023602 21.250335 6.8803207 22 7.875 22 L 16.123047 22 C 17.117726 22 17.974445 21.250322 18.105469 20.263672 L 18.107422 20.255859 L 19.890625 5 L 21 5 L 21 3 L 15 3 L 14 2 L 10 2 z M 6.125 5 L 17.875 5 L 16.123047 20 L 7.875 20 L 6.125 5 z"></path>
+                    </svg>
+                </div>
+              </div>
+              <!-- Add more notes as needed -->
+            </div>
+          </div>
+    </section>
+
+    <script src='index.js'></script>
+</body>
+</html>
